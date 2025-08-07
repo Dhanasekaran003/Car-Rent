@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import { sendVerificationEmail, welcomeEmail } from "../nodeMailer/email.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
+import { error } from "console";
 
 export const SignUp = async (req, res) => {
     console.log("api is triggered")
@@ -87,6 +88,58 @@ export const VerifyEmail = async (req, res) => {
         })
     }
 }
+
+export const resendVerificationCode = async (req, res) => {
+    const { email } = req.body;
+    console.log(email)
+    if (!email) {
+        return res.status(400).json({
+            success: false,
+            message: "Missing email or invalid email"
+        })
+    }
+    try {
+
+        const user = await User.findOne({ email });
+        console.log(user)
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+        if (user.isVerified === "true" || user.isVerified === true) {
+            return res.status(400).json({
+                success: false,
+                messsage: "User already verified"
+            })
+        }
+
+        const newCode = crypto.randomInt(100000, 1000000).toString();
+        console.log(newCode)
+        const expiresAt = Date.now() + 10 * 60 * 1000;
+        console.log(expiresAt)
+
+
+        user.verificationCode = newCode;
+        user.verificationCodeExpiresAt = expiresAt
+
+        
+        await user.save();
+        await sendVerificationEmail(email, newCode);
+        return res.status(200).json({
+            success: true,
+            message: "Resend verification code sent successsfully",
+            
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error in sending verification code", error
+        })
+    }
+}
+
 export const Login = async (req, res) => {
     const { email, password } = req.body;
     try {
