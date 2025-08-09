@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, MapPin, Calendar } from 'lucide-react';
 import BookingModal from './BookingModal';
+import bgVideo from '../assets/banner-video.mp4';
 
 const Hero = () => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -32,11 +33,22 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 min-h-screen flex items-center">
+    <section id="home" className="relative min-h-screen flex items-center">
+      {/* Background video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src={bgVideo} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
       <div className="absolute inset-0 bg-black opacity-20"></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-          Drive Your <span className="text-orange-400">Dreams</span>
+          Book Your <span className="text-orange-400">Cars</span>
         </h1>
         <p className="text-xl md:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto">
           Premium car rentals for every occasion. From economy to luxury, find the perfect vehicle for your journey.

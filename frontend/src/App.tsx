@@ -26,7 +26,7 @@ function App() {
       default:
         return (
           <>
-            <PromoBanner />
+            {/* <PromoBanner /> */}
             <Hero />
             <UrgencyBanner />
             <VehicleCategories />

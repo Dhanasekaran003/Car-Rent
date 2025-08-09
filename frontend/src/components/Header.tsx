@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Car, Menu, X } from 'lucide-react';
 import BookingModal from './BookingModal';
+import logo  from '../assets/logo-4.png'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,9 +15,8 @@ const Header = () => {
     <header className="bg-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-2">
-            <Car className="h-8 w-8 text-blue-600" />
-            <span className="text-2xl font-bold text-gray-900">CarRent</span>
+          <div className="flex items-center space-x-2 w-[150px]">
+            <img src={logo} alt="" className='rounded' />
           </div>
           
           <nav className="hidden md:flex space-x-8">
